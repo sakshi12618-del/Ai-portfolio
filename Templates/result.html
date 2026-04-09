@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #43cea2, #185a9d);
+            color: white;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            color: black;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            width: 250px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .score {
+            font-size: 40px;
+            color: green;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Analysis Result</h2>
+
+    <div class="card">
+        <h3>Score</h3>
+        <div class="score">{{score}} / 100</div>
+    </div>
+
+    <div class="card">
+        <h3>Skills</h3>
+        <ul>
+            {% for s in skills %}
+            <li>{{s}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Recommended Role</h3>
+        <p>{{role}}</p>
+    </div>
+
+    <div class="card">
+        <h3>Missing Skills</h3>
+        <ul>
+            {% for m in missing %}
+            <li>{{m}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <br>
+    <a href="/">Analyze Another Resume</a>
+
+</div>
+
+</body>
+</html>

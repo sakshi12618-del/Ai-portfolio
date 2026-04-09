@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Portfolio Analyzer</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        .container {
+            width: 400px;
+            margin: 100px auto;
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            margin: 20px 0;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>AI Portfolio Analyzer</h2>
+
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume" required>
+        <br>
+        <button type="submit">Analyze Resume</button>
+    </form>
+</div>
+
+</body>
+</html>

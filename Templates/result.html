@@ -1,67 +1,202 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Analysis Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result | AI Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
     <style>
+        :root {
+            --accent: #22d3ee;
+            --accent-strong: #06b6d4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
-            background: linear-gradient(to right, #43cea2, #185a9d);
-            color: white;
             margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+
+            background:
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),
+                url('/static/images/Result.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: grid;
+            place-items: center;
+            padding: 24px;
         }
 
         .container {
-            width: 80%;
-            margin: 50px auto;
+            width: min(1100px, 100%);
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 28px;
+        }
+
+        .summary, .details {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 36px;
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: white;
+        }
+
+        .summary:hover, .details:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
+        }
+
+        h1 {
+            margin: 0 0 16px;
+            font-size: 2.3rem;
+        }
+
+        .summary p {
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+        }
+
+        .score-card {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .stat {
+            background: rgba(34, 211, 238, 0.1);
+            border-radius: 20px;
+            padding: 24px;
             text-align: center;
         }
 
-        .card {
-            background: white;
-            color: black;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            width: 250px;
-            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+        .stat strong {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        h2 {
-            margin-bottom: 20px;
+        .score-high { color: #10b981; }
+        .score-mid { color: #f59e0b; }
+        .score-low { color: #ef4444; }
+
+        .role-value {
+            color: #22d3ee;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #22d3ee, #06b6d4);
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 8px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .tags {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            text-align: center;
+        }
+
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .actions a {
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .back:hover {
+            background: var(--accent);
+            color: black;
+        }
+
+        .dashboard, .report {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: black;
         }
 
         ul {
-            list-style: none;
-            padding: 0;
+            padding-left: 20px;
         }
 
-        li {
-            background: #eee;
-            margin: 5px;
-            padding: 5px;
-            border-radius: 5px;
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
         }
+        /* Better headings */
+.details h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #22d3ee;
+    margin-top: 24px;
+}
 
-        .score {
-            font-size: 40px;
-            color: green;
-        }
+/* Skills to Add list */
+.details ul li {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #e2e8f0;
+    margin-bottom: 10px;
+    line-height: 1.7;
+}
 
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: white;
-            color: black;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+/* Suggestions box */
+.suggestions {
+    background: rgba(34, 211, 238, 0.12);
+    border-radius: 14px;
+    padding: 18px;
+    border: 1px solid rgba(34, 211, 238, 0.25);
+}
 
-        a:hover {
-            background: #ddd;
-        }
+/* Suggestions text */
+.suggestions li {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #cbd5f5;
+}
     </style>
 </head>
 
@@ -69,38 +204,82 @@
 
 <div class="container">
 
-    <h2>Analysis Result</h2>
+    <!-- LEFT -->
+    <section class="summary">
+        <h1>✨ Analysis Complete</h1>
+        <p>Your resume insights are ready. Improve your skills and target better opportunities.</p>
 
-    <div class="card">
-        <h3>Score</h3>
-        <div class="score">{{score}} / 100</div>
-    </div>
+        <div class="score-card">
 
-    <div class="card">
-        <h3>Skills</h3>
-        <ul>
+            <!-- SCORE -->
+            <div class="stat">
+                <strong class="{% if score|int > 80 %}score-high{% elif score|int > 60 %}score-mid{% else %}score-low{% endif %}">
+                    {{ score }}
+                </strong>
+
+                <div class="progress-bar">
+                    <div class="progress" style="width: {{ score|int }}%;"></div>
+                </div>
+
+                <span>
+                    {% if score|int > 80 %}
+                        Excellent 🚀
+                    {% elif score|int > 60 %}
+                        Good 👍
+                    {% else %}
+                        Needs Improvement ⚡
+                    {% endif %}
+                </span>
+            </div>
+
+            <!-- ROLE -->
+            <div class="stat">
+                <strong class="role-value">{{ role }}</strong>
+                <span>Suggested Role</span>
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <a class="back" href="/">
+                <i class="fas fa-arrow-left"></i> Analyze
+            </a>
+
+            <a class="dashboard" href="/dashboard">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+
+            
+        </div>
+    </section>
+
+    <!-- RIGHT -->
+    <section class="details">
+
+        <h2><i class="fas fa-code"></i> Skills Detected</h2>
+        <div class="tags">
             {% for s in skills %}
-            <li>{{s}}</li>
+                <span class="tag">{{ s }}</span>
             {% endfor %}
-        </ul>
-    </div>
+        </div>
 
-    <div class="card">
-        <h3>Recommended Role</h3>
-        <p>{{role}}</p>
-    </div>
-
-    <div class="card">
-        <h3>Missing Skills</h3>
+        <h2><i class="fas fa-arrow-up"></i> Skills to Add</h2>
         <ul>
             {% for m in missing %}
-            <li>{{m}}</li>
+                <li>{{ m }}</li>
             {% endfor %}
         </ul>
-    </div>
 
-    <br>
-    <a href="/">Analyze Another Resume</a>
+        <h2><i class="fas fa-lightbulb"></i> Suggestions</h2>
+<div class="suggestions">
+    <ul>
+        <li>Add measurable achievements</li>
+        <li>Include GitHub or portfolio links</li>
+        <li>Use strong action verbs</li>
+    </ul>
+</div>
+
+    </section>
 
 </div>
 

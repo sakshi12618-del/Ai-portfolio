@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume | AI Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-start: #0f172a;
+            --bg-end: #1e293b;
+            --surface: rgba(30, 41, 59, 0.92);
+            --accent: #22d3ee;
+            --accent-strong: #06b6d4;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --border: rgba(34, 211, 238, 0.2);
+            --shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+       body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    background: 
+        linear-gradient(rgba(10,18,35,0.7), rgba(31,42,80,0.7)),
+        url('/static/images/Upload.jpeg');  /* or login.jpeg */
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+        .container {
+            width: min(560px, 100%);
+            background: var(--surface);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .hero {
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(6, 182, 212, 0.15));
+            border-bottom: 1px solid rgba(34, 211, 238, 0.2);
+            color: white;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .hero p {
+            margin: 12px 0 0;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .drop-zone {
+            border: 2px dashed rgba(34, 211, 238, 0.4);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(34, 211, 238, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .drop-zone:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: #22d3ee;
+        }
+
+        .drop-zone i {
+            font-size: 3rem;
+            color: #22d3ee;
+            margin-bottom: 16px;
+        }
+
+        .drop-zone h3 {
+            margin: 0 0 8px;
+            color: white;
+        }
+
+        .drop-zone p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .drop-zone input[type="file"] {
+            display: none;
+        }
+
+        .file-info {
+            display: none;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .file-info.show {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            color: #0f172a;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(34, 211, 238, 0.35);
+        }
+
+        button:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: #22d3ee;
+        }
+
+        .error-msg {
+            padding: 16px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 12px;
+            color: #ef4444;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1><i class="fas fa-file-upload"></i> Upload Resume</h1>
+            <p>Upload your resume to get AI-powered analysis and role recommendations.</p>
+        </div>
+        <div class="content">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <label class="drop-zone" for="resume">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drop your resume here</h3>
+                    <p>or click to browse (PDF, DOC, DOCX, TXT)</p>
+                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx,.txt" required>
+                </label>
+                
+                <div class="file-info" id="fileInfo">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="fileName"></span>
+                </div>
+
+                <div class="error-msg" id="errorMsg"></div>
+
+                <button type="submit" id="submitBtn">
+                    <i class="fas fa-brain"></i> Analyze Resume
+                </button>
+            </form>
+            <a class="back-link" href="/dashboard">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('resume');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const uploadForm = document.getElementById('uploadForm');
+        const errorMsg = document.getElementById('errorMsg');
+        const submitBtn = document.getElementById('submitBtn');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                fileName.textContent = this.files[0].name;
+                fileInfo.classList.add('show');
+                errorMsg.classList.remove('show');
+            }
+        });
+
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('resume', fileInput.files[0]);
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+
+            try {
+                const res = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const html = await res.text();
+                
+                if (res.ok) {
+                    document.body.innerHTML = html;
+                } else {
+                    errorMsg.textContent = 'Error analyzing resume. Please try again.';
+                    errorMsg.classList.add('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-brain"></i> Analyze Resume';
+                }
+            } catch (error) {
+                console.error(error);
+                errorMsg.textContent = 'Server error. Please try again.';
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-brain"></i> Analyze Resume';
+            }
+        });
+    </script>
+</body>
+</html>

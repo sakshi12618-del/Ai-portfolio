@@ -1,60 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Portfolio Analyzer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --bg: #f8fafc;
+            --accent: #667eea;
+            --accent-strong: #5568d3;
+            --accent-light: #eef2ff;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --surface: white;
+            --shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
+            --shadow-hover: 0 30px 80px rgba(102, 126, 234, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
-            background: linear-gradient(to right, #667eea, #764ba2);
             margin: 0;
-            padding: 0;
-            color: white;
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: 
+    linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)),
+    url('/static/images/BG.jpg');
+background-size: cover;
+background-position: center;
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px;
         }
 
-        .container {
+        .page {
+            width: min(1200px, 100%);
+            display: grid;
+            grid-template-columns: 1fr; /* FIXED */
+            gap: 32px;
+        }
+
+        .hero {
+            color: white;
+            padding: 60px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+background: rgba(255, 255, 255, 0.08);
+border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
             width: 400px;
-            margin: 100px auto;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.6rem, 5vw, 3.6rem);
+            line-height: 1.1;
+            font-weight: 800;
+        }
+
+        .hero p {
+            margin-top: 24px;
+            max-width: 44rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .buttons {
+            margin-top: 36px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .buttons a {
+            border-radius: 12px;
+            padding: 13px 28px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary {
             background: white;
-            color: black;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+            color: #667eea;
         }
 
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        input[type="file"] {
-            margin: 20px 0;
-        }
-
-        button {
-            background: #667eea;
+        .secondary {
+            background: rgba(255,255,255,0.2);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        button:hover {
-            background: #764ba2;
+        .panel {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
+
+        .features {
+            display: grid;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .feature {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+}
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .feature-content h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .feature-content p {
+            margin: 4px 0 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 40px;
+            }
         }
     </style>
 </head>
-
 <body>
 
-<div class="container">
-    <h2>AI Portfolio Analyzer</h2>
+<div class="page">
 
-    <form action="/analyze" method="POST" enctype="multipart/form-data">
-        <input type="file" name="resume" required>
-        <br>
-        <button type="submit">Analyze Resume</button>
-    </form>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>🚀 Build Career Momentum with AI-Powered Resume Insights</h1>
+
+        <p>
+            Analyze your resume in seconds, discover your best-fit roles,
+            and get AI-powered recommendations to accelerate your career growth.
+        </p>
+
+        <div class="buttons">
+            <a class="primary" href="/register">
+                <i class="fas fa-rocket"></i> Get Started Free
+            </a>
+
+            <a class="secondary" href="/login">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </a>
+        </div>
+
+        <div class="footer">
+            <span>
+                <i class="fas fa-bolt"></i> Fast Analysis • AI Matching • Personalized Insights
+            </span>
+            <a href="/login">
+                <i class="fas fa-arrow-right"></i> Go to Dashboard
+            </a>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="panel features">
+
+        <div class="feature">
+            <div class="feature-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="feature-content">
+                <h3>Instant Resume Scoring</h3>
+                <p>Understand how your resume performs in the job market.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="feature-content">
+                <h3>AI Role Matching</h3>
+                <p>Find roles that match your skills and experience.</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="feature-content">
+                <h3>Skills Gap Analysis</h3>
+                <p>Discover what skills you need to improve next.</p>
+            </div>
+        </div>
+
+    </section>
+
 </div>
 
 </body>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AI Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <style>
+:root {
+    --bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    --bg-light: #1e293b;
+    --surface: rgba(30, 41, 59, 0.85);
+    --accent: #22d3ee;
+    --accent-strong: #06b6d4;
+    --accent-light: #164e63;
+    --text: #f1f5f9;
+    --text-light: #94a3b8;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 30px 80px rgba(34, 211, 238, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+    display: flex;
+    justify-content: center;
+
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)),
+        url("{{ url_for('static', filename='images/BG.jpg') }}");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Text colors for dark theme */
+h1, h2, h3, p, span, li {
+    color: white;
+}
+
+.topbar h2 {
+    color: white;
+}
+
+.topbar small {
+    color: rgba(255,255,255,0.7);
+}
+
+.layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    backdrop-filter: blur(8px);
+}
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 28px;
+            padding: 50px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 0 0 30px 0;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text);
+        }
+
+        .topbar small {
+            color: var(--text-light);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-actions a {
+            border-radius: 12px;
+            padding: 11px 24px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-actions a.primary {
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            color: #0f172a;
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+        }
+
+        .nav-actions a.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(34, 211, 238, 0.4);
+        }
+
+        .nav-actions a.secondary {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(34, 211, 238, 0.3);
+            color: #22d3ee;
+        }
+
+        .nav-actions a.secondary:hover {
+            background: rgba(34, 211, 238, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #22d3ee, #06b6d4);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(34, 211, 238, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #22d3ee;
+            margin-bottom: 20px;
+        }
+
+        .card-value {
+            display: block;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #22d3ee;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        .card-label {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .section {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            margin: 0 0 24px 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .grid-2 {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: 1.3fr 0.7fr;
+        }
+
+        .panel {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(34, 211, 238, 0.3);
+        }
+
+        .panel h3 {
+            margin: 0 0 20px 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel h3 i {
+            color: #22d3ee;
+            font-size: 1.3rem;
+        }
+
+        .panel p {
+            color: rgba(255,255,255,0.75);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 0;
+        }
+
+        .tag {
+            background: rgba(34, 211, 238, 0.12);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.25);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .tag:hover {
+            background: #22d3ee;
+            color: #0f172a;
+            transform: scale(1.05);
+            border-color: #22d3ee;
+        }
+
+        .insights {
+            display: grid;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .insight {
+            background: rgba(34, 211, 238, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(34, 211, 238, 0.12);
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .insight::before {
+            content: '→';
+            position: absolute;
+            left: 8px;
+            color: #22d3ee;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .insight:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: #22d3ee;
+            transform: translateX(6px);
+        }
+
+        .insight strong {
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .insight p {
+            margin: 0;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .button-primary,
+        .button-secondary {
+            border-radius: 12px;
+            padding: 12px 28px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            color: #0f172a;
+            box-shadow: 0 10px 30px rgba(34, 211, 238, 0.3);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(34, 211, 238, 0.4);
+        }
+
+        .button-secondary {
+            background: rgba(34, 211, 238, 0.1);
+            color: #22d3ee;
+            border: 2px solid #22d3ee;
+        }
+
+        .button-secondary:hover {
+            background: #22d3ee;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 960px) {
+            .overview,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .layout {
+                padding: 20px 16px;
+            }
+
+            .hero {
+                padding: 30px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+            }
+
+            .nav-actions a {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .panel {
+                padding: 24px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>✨ AI Portfolio Dashboard</h1>
+                <p class="hero-subtitle">Track your resume performance, discover growth opportunities, and optimize your career path with AI-powered insights.</p>
+                <div class="hero-actions">
+                    <a class="button-primary" href="/analyze"><i class="fas fa-arrow-up"></i> Analyze Resume</a>
+                    <a class="button-secondary" href="/"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <section class="overview">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <strong class="card-value">{{ score }}</strong>
+                <span class="card-label">Resume Score based on skills clarity, and role alignment.</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <strong class="card-value">{{ roles }}</strong>
+                <span class="card-label">Suggested role matches generated for your profile.</span>
+            </div>
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <strong class="card-value">{{ skills }}</strong>
+                <span class="card-label">Priority skills you can add to improve faster.</span>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="section">
+            <h2>📊 Career Insights</h2>
+            <div class="grid-2">
+                <div class="panel">
+                    <h3><i class="fas fa-chart-line"></i> Your Strengths</h3>
+                    <p>Your resume highlights these key competencies. Continue developing these areas to stay competitive in the job market.</p>
+                    <div class="tag-list">
+    <span class="tag">Leadership</span>
+    <span class="tag">Machine Learning</span>
+    <span class="tag">Data Visualization</span>
+    <span class="tag">Python</span>
+    <span class="tag">Deep Learning</span>
+    <span class="tag">NLP</span>
+    <span class="tag">SQL</span>
+    <span class="tag">Cloud Computing</span>
+    <span class="tag">Data Analysis</span>
+    <span class="tag">Power BI</span>
+    <span class="tag">Communication</span>
+    <span class="tag">Problem Solving</span>
+    <span class="tag">Git & GitHub</span>
+    <span class="tag">API Development</span>
+    <span class="tag">System Design</span>
+    <span class="tag">Python</span>
+<span class="tag">Machine Learning</span>
+<span class="tag">Deep Learning</span>
+<span class="tag">SQL</span>
+<span class="tag">API Development</span>
+<span class="tag">Data Analysis</span>
+<span class="tag">Power BI</span>
+<span class="tag">Data Visualization</span>
+</div>
+                </div>
+                <div class="panel">
+                    <h3><i class="fas fa-lightbulb"></i> Action Plan</h3>
+                    <div class="insights">
+                        <div class="insight">
+                            <strong>Strengthen Impact</strong>
+                            <p>Add metrics and measurable achievements for stronger impact.</p>
+                        </div>
+                        <div class="insight">
+                            <strong>Target Roles</strong>
+                            <p>Explore roles demanding both technical and soft skills.</p>
+                        </div>
+                        <div class="insight">
+                            <strong>Fill Gaps</strong>
+                            <p>Add keywords like cloud, automation, or leadership.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
